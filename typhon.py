@@ -1,40 +1,44 @@
 #!/usr/bin/env python
 from __future__ import print_function
+from collections import Counter
 import os
 import sys
 import argparse
 
+
 def anagram(input_word, word_list):
+	lettercount = Counter(input_word)
 	anagrams = []
 
-	def anagram_recurse(input_word, word_list, possible_anagram, anagrams, count):
+	def anagram_recurse(lettercount, word_list, possible_anagram, anagrams, call_count):
+		# number of letters
+		wordlength = sum(lettercount.values())
 		for aword in word_list:
-			if len(aword) > len(input_word):
+			if len(aword) > wordlength:
 				continue
-			iw = input_word
-			match = True
-			for l in aword:
-				c = iw.find(l)
-				if c > -1:
-					iw = iw[:c] + iw[c+1:]
-				else:
-					match = False
-			if len(iw) < 1:
-				# no letters left, this is a full anagram
-				one_possible = possible_anagram + " " + aword
-				anagrams.append(one_possible.strip())
-			else:
-				# if aword was in input_word, check whether more words can be taken out
-				if match:
-					# print(possible_anagarm + " " + aword + ": " + iw)
-					count = anagram_recurse(iw, word_list, possible_anagram + " " + aword, anagrams, count)
-		count += 1
-		if count % 100 == 0:
+			acount = word_list[aword]
+
+			if len(acount - lettercount) == 0:
+				# then every letter in aword is in input_word
+				# take them out of input_word's count
+				lettercount_copy = Counter(lettercount.elements())
+				lettercount_copy.subtract(acount)
+
+				count_values = sum(lettercount_copy.values())
+				if count_values == 0:
+					# no letters left, this is a full anagram
+					one_possible = possible_anagram + " " + aword
+					anagrams.append(one_possible.strip())
+				elif count_values > 0:
+					# if aword was in input_word and there are still letters left, check whether more words can be taken out
+					call_count = anagram_recurse(lettercount_copy, word_list, possible_anagram + " " + aword, anagrams, call_count)
+		call_count += 1
+		if call_count % 10 == 0:
 			sys.stdout.write('.')
 			sys.stdout.flush()
-		return count
+		return call_count
 
-	callcount = anagram_recurse(input_word, word_list, '', anagrams, 0)
+	callcount = anagram_recurse(lettercount, word_list, '', anagrams, 0)
 	print("Called " + str(callcount) + " times.")
 	return anagrams
 
@@ -51,13 +55,14 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 	inword = args.word.lower().replace(' ', '')
 
-	words = set()
+	words = {}
 	filename = 'words.txt'
 	if args.small:
 		filename = 'small-words.txt'
 	with open(filename) as f:
 		for line in f:
-			words.add(line.strip())
+			key = line.strip()
+			words[key] = Counter(key)
 	# print(words)
 	print("Words file ready. Generating anagrams.")
 
