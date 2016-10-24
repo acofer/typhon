@@ -10,6 +10,33 @@ def anagram(input_word, word_list):
 	lettercount = Counter(input_word)
 	anagrams = []
 
+	def forbidden_letters(worda, wordb):
+		# does worda have any letters that are not in word b?
+		for l in worda:
+			if l not in wordb:
+				return True
+		return False
+
+	print("Filtering words...")
+	# print("Word count: " + str(len(word_list)))
+	# filter out words that aren't going to work
+	filtered_list = []
+	for word in word_list:
+		if len(word) > len(input_word):
+			continue
+		if forbidden_letters(word, input_word):
+			continue
+		filtered_list.append(word)
+	# print("Filtered word count: " + str(len(filtered_list)))
+
+	print("Building letter counts...")
+	counter_list = {}
+	for word in filtered_list:
+		counter_list[word] = Counter(word)
+
+	print("counters: " + str(len(counter_list)))
+
+	print("Searching...")
 	def anagram_recurse(lettercount, word_list, possible_anagram, anagrams, call_count):
 		# number of letters
 		wordlength = sum(lettercount.values())
@@ -33,12 +60,12 @@ def anagram(input_word, word_list):
 					# if aword was in input_word and there are still letters left, check whether more words can be taken out
 					call_count = anagram_recurse(lettercount_copy, word_list, possible_anagram + " " + aword, anagrams, call_count)
 		call_count += 1
-		if call_count % 10 == 0:
+		if call_count % 100 == 0:
 			sys.stdout.write('.')
 			sys.stdout.flush()
 		return call_count
 
-	callcount = anagram_recurse(lettercount, word_list, '', anagrams, 0)
+	callcount = anagram_recurse(lettercount, counter_list, '', anagrams, 0)
 	print("Called " + str(callcount) + " times.")
 	return anagrams
 
@@ -51,20 +78,27 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description=description)
 	parser.add_argument('-w', '--word', type=str, required=True, help='Outbound call gateway')
 	parser.add_argument('-s', '--small', action='store_true', help='Use small word list')
+	parser.add_argument('-o', '--outfile', type=str, help='Store results to output file')
 
 	args = parser.parse_args()
 	inword = args.word.lower().replace(' ', '')
 
-	words = {}
+	words = []
 	filename = 'words.txt'
 	if args.small:
 		filename = 'small-words.txt'
 	with open(filename) as f:
 		for line in f:
-			key = line.strip()
-			words[key] = Counter(key)
+			words.append(line.strip())
 	# print(words)
-	print("Words file ready. Generating anagrams.")
+	print("Words file ready.")
 
 	anagrams = anagram(inword, words)
-	print(anagrams)
+	anagrams.sort()
+	if args.outfile:
+		print("Writing output file.")
+		with open(args.outfile, 'w') as of:
+			for ana in anagrams:
+				of.write(ana + '\n')
+	else:
+		print("\n".join(anagrams))
