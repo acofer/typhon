@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"for",
+				"forbidden_letters"
+			],
+			[
+				"filt",
+				"filtered_list"
+			],
+			[
+				"word",
+				"wordlength"
+			],
+			[
+				"letter",
+				"lettercount"
+			],
+			[
 				"poss",
 				"possible_anagram"
 			],
@@ -238,10 +254,6 @@
 			[
 				"inli",
 				"inline_actions"
-			],
-			[
-				"for",
-				"force_machine"
 			],
 			[
 				"free",
@@ -502,18 +514,6 @@
 			[
 				"tie",
 				"tiered_price"
-			],
-			[
-				"ti",
-				"tiered_price"
-			],
-			[
-				"us",
-				"usageel"
-			],
-			[
-				"usage",
-				"usage_records"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "typhon.py",
 			"settings":
 			{
-				"buffer_size": 1325,
+				"buffer_size": 3057,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -553,7 +553,7 @@
 	"command_palette":
 	{
 		"height": 400.0,
-		"last_filter": "",
+		"last_filter": ":w",
 		"selected_items":
 		[
 			[
@@ -693,7 +693,7 @@
 				"SublimeLinter: Report (Open Files)"
 			]
 		],
-		"width": 596.0
+		"width": 601.0
 	},
 	"console":
 	{
@@ -718,6 +718,7 @@
 	],
 	"file_history":
 	[
+		"/Users/acofer/Documents/Development/cofer_anagrams.txt",
 		"/Users/acofer/Documents/Development/azure_docker_swarm/.gitignore",
 		"/Users/acofer/Documents/Development/azure_docker_swarm/acofer-testswarmmgmt.eastus.cloudapp.azure.com",
 		"/Users/acofer/Documents/Development/azure_docker_swarm/swarmpoc/.dockerignore",
@@ -844,8 +845,7 @@
 		"/Users/acofer/Documents/Development/powerdialer/ansible/roles/elk/templates/02-filebeat-input.conf.j2",
 		"/Users/acofer/Desktop/TestCall-2016-08029.txt",
 		"/Users/acofer/Documents/Development/powerdialer/logstash.md",
-		"/Users/acofer/Documents/Development/powerdialer/json_catapult/server-dev.js",
-		"/Users/acofer/Documents/Development/powerdialer/ansible/replacementconfigs/odbcinst.ini"
+		"/Users/acofer/Documents/Development/powerdialer/json_catapult/server-dev.js"
 	],
 	"find":
 	{
@@ -893,6 +893,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"count",
 			"PORT",
 			"recovery",
 			"\t[SCSV_Report_Job].[JobID],\n\t[SCSV_Report_Job].[JobName],\n\t[SCSV_Report_Job].[StartTime],\n\t[SCSV_Report_Job].[ExpireTime],\n\t[SCSV_Report_JobStatus].[JobStatusID],\n\t[SCSV_Report_JobStatus].[Name],\n\t[SCSV_Report_Job].[HouseholdCount],\n\t[SCSV_Report_Job].[UniverseCount],\n\t[SCSV_Report_Job].[PowerDialerEnabled],\n\t[SCSV_Report_Job].[PowerDialerNumCalls],\n\t[SCSV_Report_Job].[EnableAMD],\n\t[SCSV_Report_Job].[PowerDialerCallerID],\n\t[SCSV_Report_Job].[PowerDialerCallerName],\n\t[SCSV_Report_Job].[PowerDialerRingDuration],\n\t[",
@@ -1019,8 +1020,7 @@
 			"link",
 			"when:",
 			"_getCallee",
-			"_recordStatus",
-			"\n\t\t\t"
+			"_recordStatus"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1095,15 +1095,28 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1325,
+						"buffer_size": 3057,
 						"regions":
 						{
+							"bp-daf8d26f":
+							{
+								"flags": 16,
+								"icon": "circle",
+								"regions":
+								[
+									[
+										2666,
+										2666
+									]
+								],
+								"scope": "invalid"
+							}
 						},
 						"selection":
 						[
 							[
-								979,
-								979
+								2482,
+								2482
 							]
 						],
 						"settings":
@@ -1112,7 +1125,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 626.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
